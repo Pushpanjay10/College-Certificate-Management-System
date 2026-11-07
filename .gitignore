@@ -5,6 +5,7 @@ target/
 *.war
 *.ear
 *.zip
+*.exe
 windows-dist/
 
 # JDK / Runtimes

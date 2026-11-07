@@ -21,8 +21,14 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Install NSIS
+      run: sudo apt-get update && sudo apt-get install -y nsis
+
     - name: Build with Maven (Fat JAR & Executable)
       run: mvn clean package -DskipTests
+
+    - name: Build Windows Installer (.exe)
+      run: makensis installer.nsi
 
     - name: Upload Application JAR Artifact
       uses: actions/upload-artifact@v4
@@ -30,8 +36,14 @@ jobs:
         name: CollegeCertGen-Pro-JAR
         path: target/CollegeCertGen-Pro.jar
 
-    - name: Upload Windows Executable Artifact
+    - name: Upload Windows Standalone Executable
       uses: actions/upload-artifact@v4
       with:
-        name: Windows-Executable
+        name: Windows-Standalone-Executable
         path: target/CollegeCertificateManagementSystem.exe
+
+    - name: Upload Windows Setup Installer (.exe)
+      uses: actions/upload-artifact@v4
+      with:
+        name: Windows-Setup-Installer
+        path: CollegeCertificateManagementSystem-Installer.exe
