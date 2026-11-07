@@ -1,0 +1,34 @@
+# Target and Build Artifacts
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+windows-dist/
+
+# JDK / Runtimes
+*.jdk/
+oracleJdk-27.jdk/
+
+# IDE / Editor Files
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS Generated
+.DS_Store
+Thumbs.db
+*.qlpreview/
+*.log
+
+# Databases / Local testing files
+*.db
+*.sqlite
+*.sqlite3
+test_*.pdf
+test_*.png
+EOF

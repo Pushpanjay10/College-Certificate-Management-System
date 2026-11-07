@@ -1,0 +1,121 @@
+roll_no,name,reg_no,department_code,class_code,email,phone
+1,MURLIDHAR YADAV,21NCBCA001,BCA,BCA-3,murlidharyadav.1@nalandacollege.ac.in,+91 9431010073
+2,BALI KUMAR,21NCBCA002,BCA,BCA-3,balikumar.2@nalandacollege.ac.in,+91 9431010146
+3,ANANT RAJ,21NCBCA003,BCA,BCA-3,anantraj.3@nalandacollege.ac.in,+91 9431010219
+4,AMBIKA KUMARI,21NCBCA004,BCA,BCA-3,ambikakumari.4@nalandacollege.ac.in,+91 9431010292
+5,RAUSHAN KUMAR,21NCBCA005,BCA,BCA-3,raushankumar.5@nalandacollege.ac.in,+91 9431010365
+6,ADITI GUPTA,21NCBCA006,BCA,BCA-3,aditigupta.6@nalandacollege.ac.in,+91 9431010438
+7,ANJALI GUPTA,21NCBCA007,BCA,BCA-3,anjaligupta.7@nalandacollege.ac.in,+91 9431010511
+8,SUMIT KUMAR,21NCBCA008,BCA,BCA-3,sumitkumar.8@nalandacollege.ac.in,+91 9431010584
+9,SHRUTI SHARMA,21NCBCA009,BCA,BCA-3,shrutisharma.9@nalandacollege.ac.in,+91 9431010657
+10,HIMANSHU KUMAR,21NCBCA010,BCA,BCA-3,himanshukumar.10@nalandacollege.ac.in,+91 9431010730
+11,SURUCHI KUMARI,21NCBCA011,BCA,BCA-3,suruchikumari.11@nalandacollege.ac.in,+91 9431010803
+12,ARYAN KUMAR,21NCBCA012,BCA,BCA-3,aryankumar.12@nalandacollege.ac.in,+91 9431010876
+13,SAURAV KUMAR,21NCBCA013,BCA,BCA-3,sauravkumar.13@nalandacollege.ac.in,+91 9431010949
+14,MD HUZAIFA,21NCBCA014,BCA,BCA-3,mdhuzaifa.14@nalandacollege.ac.in,+91 9431011022
+15,HARSH GUPTA,21NCBCA015,BCA,BCA-3,harshgupta.15@nalandacollege.ac.in,+91 9431011095
+16,KUMAR SAGAR,21NCBCA016,BCA,BCA-3,kumarsagar.16@nalandacollege.ac.in,+91 9431011168
+17,ANISHA KUMARI,21NCBCA017,BCA,BCA-3,anishakumari.17@nalandacollege.ac.in,+91 9431011241
+18,ADITYA SHUBHAM,21NCBCA018,BCA,BCA-3,adityashubham.18@nalandacollege.ac.in,+91 9431011314
+19,PRIYANSHU KUMAR,21NCBCA019,BCA,BCA-3,priyanshukumar.19@nalandacollege.ac.in,+91 9431011387
+20,HARSH RAJ,21NCBCA020,BCA,BCA-3,harshraj.20@nalandacollege.ac.in,+91 9431011460
+21,SURAJ KUMAR,21NCBCA021,BCA,BCA-3,surajkumar.21@nalandacollege.ac.in,+91 9431011533
+22,SALONI,21NCBCA022,BCA,BCA-3,saloni.22@nalandacollege.ac.in,+91 9431011606
+23,SUBHYA SUMAN,21NCBCA023,BCA,BCA-3,subhyasuman.23@nalandacollege.ac.in,+91 9431011679
+24,KARAN KUMAR,21NCBCA024,BCA,BCA-3,karankumar.24@nalandacollege.ac.in,+91 9431011752
+25,RISHIKET KUMAR,21NCBCA025,BCA,BCA-3,rishiketkumar.25@nalandacollege.ac.in,+91 9431011825
+26,AMIT RAJ,21NCBCA026,BCA,BCA-3,amitraj.26@nalandacollege.ac.in,+91 9431011898
+27,MD SAHOON ALAM,21NCBCA027,BCA,BCA-3,mdsahoonalam.27@nalandacollege.ac.in,+91 9431011971
+28,MUSKAN KUMARI,21NCBCA028,BCA,BCA-3,muskankumari.28@nalandacollege.ac.in,+91 9431012044
+29,MD ARSHAD,21NCBCA029,BCA,BCA-3,mdarshad.29@nalandacollege.ac.in,+91 9431012117
+30,SAURAV KUMAR,21NCBCA030,BCA,BCA-3,sauravkumar.30@nalandacollege.ac.in,+91 9431012190
+31,SAURAV KUMAR,21NCBCA031,BCA,BCA-3,sauravkumar.31@nalandacollege.ac.in,+91 9431012263
+32,HARSHIT KUMAR,21NCBCA032,BCA,BCA-3,harshitkumar.32@nalandacollege.ac.in,+91 9431012336
+33,PAYAL KUMARI,21NCBCA033,BCA,BCA-3,payalkumari.33@nalandacollege.ac.in,+91 9431012409
+34,ANKIT KUMAR,21NCBCA034,BCA,BCA-3,ankitkumar.34@nalandacollege.ac.in,+91 9431012482
+35,ANKIT KUMAR,21NCBCA035,BCA,BCA-3,ankitkumar.35@nalandacollege.ac.in,+91 9431012555
+36,SOHAN KUMAR,21NCBCA036,BCA,BCA-3,sohankumar.36@nalandacollege.ac.in,+91 9431012628
+37,JAY KUMAR,21NCBCA037,BCA,BCA-3,jaykumar.37@nalandacollege.ac.in,+91 9431012701
+38,ANJALI RANI,21NCBCA038,BCA,BCA-3,anjalirani.38@nalandacollege.ac.in,+91 9431012774
+39,ROHIT KUMAR,21NCBCA039,BCA,BCA-3,rohitkumar.39@nalandacollege.ac.in,+91 9431012847
+40,AAYUSH KUMAR KAUSHIK,21NCBCA040,BCA,BCA-3,aayushkumarkaushik.40@nalandacollege.ac.in,+91 9431012920
+41,RUDRA RAJ,21NCBCA041,BCA,BCA-3,rudraraj.41@nalandacollege.ac.in,+91 9431012993
+42,SHREYA,21NCBCA042,BCA,BCA-3,shreya.42@nalandacollege.ac.in,+91 9431013066
+43,ASHISH RANJAN,21NCBCA043,BCA,BCA-3,ashishranjan.43@nalandacollege.ac.in,+91 9431013139
+44,SHIVAM KUMAR,21NCBCA044,BCA,BCA-3,shivamkumar.44@nalandacollege.ac.in,+91 9431013212
+45,ISHA MEHTA,21NCBCA045,BCA,BCA-3,ishamehta.45@nalandacollege.ac.in,+91 9431013285
+46,ABHINAV GUPTA,21NCBCA046,BCA,BCA-3,abhinavgupta.46@nalandacollege.ac.in,+91 9431013358
+47,ZAINUL ABEDIN ALI,21NCBCA047,BCA,BCA-3,zainulabedinali.47@nalandacollege.ac.in,+91 9431013431
+48,ADITYA KUMAR,21NCBCA048,BCA,BCA-3,adityakumar.48@nalandacollege.ac.in,+91 9431013504
+49,ASHISH RANJAN,21NCBCA049,BCA,BCA-3,ashishranjan.49@nalandacollege.ac.in,+91 9431013577
+50,ALOK KUMAR,21NCBCA050,BCA,BCA-3,alokkumar.50@nalandacollege.ac.in,+91 9431013650
+51,VIDYA SUMAN KUMARI,21NCBCA051,BCA,BCA-3,vidyasumankumari.51@nalandacollege.ac.in,+91 9431013723
+52,PAMMI JOSHI,21NCBCA052,BCA,BCA-3,pammijoshi.52@nalandacollege.ac.in,+91 9431013796
+53,KHUSHIYAN KUMARI,21NCBCA053,BCA,BCA-3,khushiyankumari.53@nalandacollege.ac.in,+91 9431013869
+54,PRIYADARSHAN KUMAR,21NCBCA054,BCA,BCA-3,priyadarshankumar.54@nalandacollege.ac.in,+91 9431013942
+55,SACHIN KUMAR,21NCBCA055,BCA,BCA-3,sachinkumar.55@nalandacollege.ac.in,+91 9431014015
+56,KARINA KUMARI,21NCBCA056,BCA,BCA-3,karinakumari.56@nalandacollege.ac.in,+91 9431014088
+57,DIVYA KUMARI,21NCBCA057,BCA,BCA-3,divyakumari.57@nalandacollege.ac.in,+91 9431014161
+58,PUSHPANJAY SINHA,21NCBCA058,BCA,BCA-3,pushpanjaysinha.58@nalandacollege.ac.in,+91 9431014234
+59,MAHLAQA SANA,21NCBCA059,BCA,BCA-3,mahlaqasana.59@nalandacollege.ac.in,+91 9431014307
+60,SNEHA KUMARI,21NCBCA060,BCA,BCA-3,snehakumari.60@nalandacollege.ac.in,+91 9431014380
+61,SUMAN KUMAR,21NCBCA061,BCA,BCA-3,sumankumar.61@nalandacollege.ac.in,+91 9431014453
+62,SONU KUMAR,21NCBCA062,BCA,BCA-3,sonukumar.62@nalandacollege.ac.in,+91 9431014526
+63,KOMAL KUMARI,21NCBCA063,BCA,BCA-3,komalkumari.63@nalandacollege.ac.in,+91 9431014599
+64,PRASHANT KUMAR,21NCBCA064,BCA,BCA-3,prashantkumar.64@nalandacollege.ac.in,+91 9431014672
+65,SNAYA SAVANT,21NCBCA065,BCA,BCA-3,snayasavant.65@nalandacollege.ac.in,+91 9431014745
+66,MUSKAN KUMARI,21NCBCA066,BCA,BCA-3,muskankumari.66@nalandacollege.ac.in,+91 9431014818
+67,KUNDAN RAJ,21NCBCA067,BCA,BCA-3,kundanraj.67@nalandacollege.ac.in,+91 9431014891
+68,ANKIT KUMAR,21NCBCA068,BCA,BCA-3,ankitkumar.68@nalandacollege.ac.in,+91 9431014964
+69,PAYAL KUMARI,21NCBCA069,BCA,BCA-3,payalkumari.69@nalandacollege.ac.in,+91 9431015037
+70,ADITYA KUMAR,21NCBCA070,BCA,BCA-3,adityakumar.70@nalandacollege.ac.in,+91 9431015110
+71,ANKUSH KUMAR,21NCBCA071,BCA,BCA-3,ankushkumar.71@nalandacollege.ac.in,+91 9431015183
+72,ROHIT RANJAN,21NCBCA072,BCA,BCA-3,rohitranjan.72@nalandacollege.ac.in,+91 9431015256
+73,RISHAV KUMAR,21NCBCA073,BCA,BCA-3,rishavkumar.73@nalandacollege.ac.in,+91 9431015329
+74,TANAV KUMAR GAUTAM,21NCBCA074,BCA,BCA-3,tanavkumargautam.74@nalandacollege.ac.in,+91 9431015402
+75,PRASHANT RAJ,21NCBCA075,BCA,BCA-3,prashantraj.75@nalandacollege.ac.in,+91 9431015475
+76,RAHUL KUMAR,21NCBCA076,BCA,BCA-3,rahulkumar.76@nalandacollege.ac.in,+91 9431015548
+77,SAKSHI KUMARI,21NCBCA077,BCA,BCA-3,sakshikumari.77@nalandacollege.ac.in,+91 9431015621
+78,SANDEEP KUMAR,21NCBCA078,BCA,BCA-3,sandeepkumar.78@nalandacollege.ac.in,+91 9431015694
+79,STUTI KUMARI,21NCBCA079,BCA,BCA-3,stutikumari.79@nalandacollege.ac.in,+91 9431015767
+80,PRIYANKA KUMARI,21NCBCA080,BCA,BCA-3,priyankakumari.80@nalandacollege.ac.in,+91 9431015840
+81,AKRITI VERMA,21NCBCA081,BCA,BCA-3,akritiverma.81@nalandacollege.ac.in,+91 9431015913
+82,SALONI RAJ,21NCBCA082,BCA,BCA-3,saloniraj.82@nalandacollege.ac.in,+91 9431015986
+83,SHIVANI KUMARI,21NCBCA083,BCA,BCA-3,shivanikumari.83@nalandacollege.ac.in,+91 9431016059
+84,SAMIR KUMAR,21NCBCA084,BCA,BCA-3,samirkumar.84@nalandacollege.ac.in,+91 9431016132
+85,ANKIT KUMAR,21NCBCA085,BCA,BCA-3,ankitkumar.85@nalandacollege.ac.in,+91 9431016205
+86,PUSHPANJALI KUMARI,21NCBCA086,BCA,BCA-3,pushpanjalikumari.86@nalandacollege.ac.in,+91 9431016278
+87,NILESH KUMAR,21NCBCA087,BCA,BCA-3,nileshkumar.87@nalandacollege.ac.in,+91 9431016351
+88,RAJU KUMAR,21NCBCA088,BCA,BCA-3,rajukumar.88@nalandacollege.ac.in,+91 9431016424
+89,GAUTAM KUMAR,21NCBCA089,BCA,BCA-3,gautamkumar.89@nalandacollege.ac.in,+91 9431016497
+90,GOPAL KUMAR,21NCBCA090,BCA,BCA-3,gopalkumar.90@nalandacollege.ac.in,+91 9431016570
+91,MD AMAN FAISAL,21NCBCA091,BCA,BCA-3,mdamanfaisal.91@nalandacollege.ac.in,+91 9431016643
+92,SHIV SHANKAR PRASAD,21NCBCA092,BCA,BCA-3,shivshankarprasad.92@nalandacollege.ac.in,+91 9431016716
+93,AMAN RAJ,21NCBCA093,BCA,BCA-3,amanraj.93@nalandacollege.ac.in,+91 9431016789
+94,ASHWANI KUMAR,21NCBCA094,BCA,BCA-3,ashwanikumar.94@nalandacollege.ac.in,+91 9431016862
+95,RISHU RAJ,21NCBCA095,BCA,BCA-3,rishuraj.95@nalandacollege.ac.in,+91 9431016935
+96,ZEESHAN,21NCBCA096,BCA,BCA-3,zeeshan.96@nalandacollege.ac.in,+91 9431017008
+97,MOHIT KUMAR,21NCBCA097,BCA,BCA-3,mohitkumar.97@nalandacollege.ac.in,+91 9431017081
+98,ALOK KUMAR,21NCBCA098,BCA,BCA-3,alokkumar.98@nalandacollege.ac.in,+91 9431017154
+99,MAYANK KORACHH,21NCBCA099,BCA,BCA-3,mayankkorachh.99@nalandacollege.ac.in,+91 9431017227
+100,RISHAV RAJ,21NCBCA100,BCA,BCA-3,rishavraj.100@nalandacollege.ac.in,+91 9431017300
+101,RAHUL KUMAR,21NCBCA101,BCA,BCA-3,rahulkumar.101@nalandacollege.ac.in,+91 9431017373
+102,AKASH KUMAR,21NCBCA102,BCA,BCA-3,akashkumar.102@nalandacollege.ac.in,+91 9431017446
+103,PUSHPANJAY PATEL,21NCBCA103,BCA,BCA-3,pushpanjaypatel.103@nalandacollege.ac.in,+91 9431017519
+104,AKASHDEEP KUMAR,21NCBCA104,BCA,BCA-3,akashdeepkumar.104@nalandacollege.ac.in,+91 9431017592
+105,SAHIL RAJ,21NCBCA105,BCA,BCA-3,sahilraj.105@nalandacollege.ac.in,+91 9431017665
+106,ANKIT KUMAR,21NCBCA106,BCA,BCA-3,ankitkumar.106@nalandacollege.ac.in,+91 9431017738
+107,SHUBHAM RAJ,21NCBCA107,BCA,BCA-3,shubhamraj.107@nalandacollege.ac.in,+91 9431017811
+108,SINTU KUMAR,21NCBCA108,BCA,BCA-3,sintukumar.108@nalandacollege.ac.in,+91 9431017884
+109,AMAN KUMAR,21NCBCA109,BCA,BCA-3,amankumar.109@nalandacollege.ac.in,+91 9431017957
+110,SHIVAM KUMAR,21NCBCA110,BCA,BCA-3,shivamkumar.110@nalandacollege.ac.in,+91 9431018030
+111,SAURAV KUMAR,21NCBCA111,BCA,BCA-3,sauravkumar.111@nalandacollege.ac.in,+91 9431018103
+112,SHUBHAM RAJ,21NCBCA112,BCA,BCA-3,shubhamraj.112@nalandacollege.ac.in,+91 9431018176
+113,PRAVEEN KUMAR,21NCBCA113,BCA,BCA-3,praveenkumar.113@nalandacollege.ac.in,+91 9431018249
+114,ABNISH KUMAR,21NCBCA114,BCA,BCA-3,abnishkumar.114@nalandacollege.ac.in,+91 9431018322
+115,SUBHAM KUMAR,21NCBCA115,BCA,BCA-3,subhamkumar.115@nalandacollege.ac.in,+91 9431018395
+116,DIPESH PATEL,21NCBCA116,BCA,BCA-3,dipeshpatel.116@nalandacollege.ac.in,+91 9431018468
+117,RAUNAK RAJ,21NCBCA117,BCA,BCA-3,raunakraj.117@nalandacollege.ac.in,+91 9431018541
+118,ANKIT RAJ,21NCBCA118,BCA,BCA-3,ankitraj.118@nalandacollege.ac.in,+91 9431018614
+119,NIRAJ KUMAR,21NCBCA119,BCA,BCA-3,nirajkumar.119@nalandacollege.ac.in,+91 9431018687
+120,SUBODH KUMAR,21NCBCA120,BCA,BCA-3,subodhkumar.120@nalandacollege.ac.in,+91 9431018760
