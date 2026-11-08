@@ -6,13 +6,11 @@ InstallDir "$LOCALAPPDATA\CollegeCertificateManagementSystem"
 InstallDirRegKey HKCU "Software\CollegeCertificateManagementSystem" ""
 RequestExecutionLevel user
 
+SetCompressor /SOLID lzma
+
 !define MUI_ABORTWARNING
 !define MUI_ICON "src/main/resources/images/app_icon.ico"
 !define MUI_UNICON "src/main/resources/images/app_icon.ico"
-
-; Interface Settings
-!define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP_NOSTRETCH
 
 ; Pages
 !insertmacro MUI_PAGE_WELCOME
@@ -33,16 +31,23 @@ RequestExecutionLevel user
 Section "Install"
   SetOutPath "$INSTDIR"
   
+  ; Core Application Binaries
   File "target/CollegeCertificateManagementSystem.exe"
   File "target/CollegeCertGen-Pro.jar"
   File "src/main/resources/images/app_icon.ico"
   File "run.bat"
   File "README_WINDOWS.txt"
   
+  ; Bundled Private Windows Java 17 Runtime Environment
+  SetOutPath "$INSTDIR\jre"
+  File /r "windows_jre\*.*"
+  
+  SetOutPath "$INSTDIR"
+  
   ; Create Uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
-  ; Desktop Shortcut
+  ; Desktop Shortcut (Runs native exe with embedded icon)
   CreateShortcut "$DESKTOP\College Certificate Management System.lnk" "$INSTDIR\CollegeCertificateManagementSystem.exe" "" "$INSTDIR\app_icon.ico" 0
   
   ; Start Menu Shortcuts
@@ -65,6 +70,7 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\College Certificate Management System\Uninstall.lnk"
   RMDir "$SMPROGRAMS\College Certificate Management System"
   
+  RMDir /r "$INSTDIR\jre"
   Delete "$INSTDIR\CollegeCertificateManagementSystem.exe"
   Delete "$INSTDIR\CollegeCertGen-Pro.jar"
   Delete "$INSTDIR\app_icon.ico"

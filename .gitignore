@@ -11,6 +11,7 @@ windows-dist/
 # JDK / Runtimes
 *.jdk/
 oracleJdk-27.jdk/
+windows_jre/
 
 # IDE / Editor Files
 .idea/

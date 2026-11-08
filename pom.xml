@@ -125,13 +125,15 @@
                             <jar>${project.build.directory}/CollegeCertGen-Pro.jar</jar>
                             <outfile>${project.build.directory}/CollegeCertificateManagementSystem.exe</outfile>
                             <icon>src/main/resources/images/app_icon.ico</icon>
+                            <errTitle>College Certificate Management System</errTitle>
                             <downloadUrl>https://adoptium.net/</downloadUrl>
                             <classPath>
                                 <mainClass>com.college.certgen.MainApp</mainClass>
                             </classPath>
                             <jre>
-                                <path>%JAVA_HOME%;%PATH%</path>
-                                <minVersion>11</minVersion>
+                                <path>jre</path>
+                                <minVersion>17</minVersion>
+                                <jdkPreference>preferJre</jdkPreference>
                             </jre>
                             <versionInfo>
                                 <fileVersion>1.0.0.0</fileVersion>

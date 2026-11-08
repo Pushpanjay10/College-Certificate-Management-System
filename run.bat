@@ -3,43 +3,42 @@ REM ========================================================
 REM  College Certificate Management System - Windows Launcher
 REM ========================================================
 title College Certificate Management System
+cd /d "%~dp0"
 
-echo ========================================================
-echo  Starting College Certificate Management System (Windows)
-echo ========================================================
-
-if exist "target\CollegeCertificateManagementSystem.exe" (
-    echo Launching Native Windows Executable...
-    start "" "target\CollegeCertificateManagementSystem.exe"
+REM 1. Check bundled private JRE
+if exist "jre\bin\javaw.exe" (
+    start "" "jre\bin\javaw.exe" -jar "CollegeCertGen-Pro.jar"
     exit /b 0
 )
 
+REM 2. Check native Windows Executable
 if exist "CollegeCertificateManagementSystem.exe" (
-    echo Launching Native Windows Executable...
     start "" "CollegeCertificateManagementSystem.exe"
     exit /b 0
 )
 
-set JAR_PATH=target\CollegeCertGen-Pro.jar
-if not exist "%JAR_PATH%" set JAR_PATH=CollegeCertGen-Pro.jar
-
-if not exist "%JAR_PATH%" (
-    echo Application binary not found. Attempting maven build...
-    call mvn clean package -DskipTests
+if exist "target\CollegeCertificateManagementSystem.exe" (
+    start "" "target\CollegeCertificateManagementSystem.exe"
+    exit /b 0
 )
 
-if not exist "%JAR_PATH%" (
-    echo [ERROR] Application binary not found. Please install Java 17+ and Maven.
-    pause
-    exit /b 1
+REM 3. Check system Java
+set JAR_FILE=CollegeCertGen-Pro.jar
+if not exist "%JAR_FILE%" set JAR_FILE=target\CollegeCertGen-Pro.jar
+
+where javaw >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    start "" javaw -jar "%JAR_FILE%"
+    exit /b 0
 )
 
-echo Launching Java Executable...
-java -jar "%JAR_PATH%"
-
-if %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo An error occurred. Make sure Java 17 or higher is installed and on your PATH.
-    echo Download link: https://adoptium.net/
-    pause
+where java >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    start "" java -jar "%JAR_FILE%"
+    exit /b 0
 )
+
+echo [ERROR] Java Runtime not detected.
+echo Please reinstall using CollegeCertificateManagementSystem-Installer.exe
+echo or install Java 17+ from: https://adoptium.net/
+pause
