@@ -1,9 +1,12 @@
 package com.college.certgen.ui.students
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -19,6 +22,7 @@ import com.college.certgen.data.db.AppDatabaseHelper
 import com.college.certgen.data.models.Student
 import com.college.certgen.data.models.UserAccount
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentsScreen(
     currentUser: UserAccount,
@@ -27,20 +31,27 @@ fun StudentsScreen(
 ) {
     var searchQuery by remember { mutableStateOf("") }
     var studentsList by remember { mutableStateOf(dbHelper.getStudents(currentUser.collegeName)) }
+    var selectedClassFilter by remember { mutableStateOf("All") }
     var showAddDialog by remember { mutableStateOf(false) }
     var studentToDelete by remember { mutableStateOf<Student?>(null) }
 
-    val filteredList = remember(searchQuery, studentsList) {
-        if (searchQuery.isBlank()) studentsList
-        else {
+    val classFilters = listOf("All", "BCA-3", "BCA-2", "BCA-1", "MAC-1", "MAC-2", "MBA-1", "BBA-1", "BA-1", "MA-1")
+
+    val filteredList = remember(searchQuery, selectedClassFilter, studentsList) {
+        var list = studentsList
+        if (selectedClassFilter != "All") {
+            list = list.filter { it.classCode.equals(selectedClassFilter, ignoreCase = true) }
+        }
+        if (searchQuery.isNotBlank()) {
             val q = searchQuery.trim().lowercase()
-            studentsList.filter {
+            list = list.filter {
                 it.name.lowercase().contains(q) ||
                 it.rollNo.lowercase().contains(q) ||
                 it.regNo.lowercase().contains(q) ||
                 it.classCode.lowercase().contains(q)
             }
         }
+        list
     }
 
     Scaffold(
@@ -51,7 +62,7 @@ fun StudentsScreen(
                 containerColor = Color(0xFF2563EB),
                 contentColor = Color.White
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Student")
+                Icon(Icons.Default.PersonAdd, contentDescription = "Add Student")
             }
         }
     ) { innerPadding ->
@@ -67,7 +78,7 @@ fun StudentsScreen(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text("Search by name, roll no, or reg no...", color = Color(0xFF94A3B8)) },
+                placeholder = { Text("Search by name, roll no, or reg no...", color = Color(0xFF94A3B8), fontSize = 13.sp) },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color(0xFF38BDF8)) },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
@@ -88,9 +99,34 @@ fun StudentsScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-            // Info Count Row
+            // Class Filter Horizontal Chips
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                classFilters.forEach { c ->
+                    val isSelected = c == selectedClassFilter
+                    FilterChip(
+                        selected = isSelected,
+                        onClick = { selectedClassFilter = c },
+                        label = { Text(c, fontSize = 11.5.sp) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = Color(0xFF2563EB),
+                            selectedLabelColor = Color.White,
+                            containerColor = Color(0xFF1E293B),
+                            labelColor = Color(0xFF94A3B8)
+                        )
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // Header info row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -100,24 +136,25 @@ fun StudentsScreen(
                     text = "Enrolled Students (${filteredList.size})",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp
+                    fontSize = 14.sp
                 )
                 Text(
                     text = currentUser.collegeName,
-                    color = Color(0xFF94A3B8),
-                    fontSize = 11.sp
+                    color = Color(0xFF38BDF8),
+                    fontSize = 11.sp,
+                    maxLines = 1
                 )
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             if (filteredList.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(Icons.Default.PersonOff, contentDescription = null, tint = Color(0xFF64748B), modifier = Modifier.size(48.dp))
                         Spacer(modifier = Modifier.height(12.dp))
-                        Text("No students found", color = Color(0xFF94A3B8), fontSize = 16.sp)
-                        Text("Click + to add a new student", color = Color(0xFF64748B), fontSize = 13.sp)
+                        Text("No students found in this filter", color = Color(0xFF94A3B8), fontSize = 15.sp)
+                        Text("Tap + button below to add a student", color = Color(0xFF64748B), fontSize = 12.sp)
                     }
                 }
             } else {
@@ -126,8 +163,12 @@ fun StudentsScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(filteredList, key = { it.id }) { student ->
-                        StudentCard(
+                        val isIssued = remember(student.id) {
+                            dbHelper.isCertificateIssuedForStudent(student.id)
+                        }
+                        StudentItemCard(
                             student = student,
+                            isIssued = isIssued,
                             onIssueClick = { onIssueForStudent(student) },
                             onDeleteClick = { studentToDelete = student }
                         )
@@ -163,7 +204,7 @@ fun StudentsScreen(
                     OutlinedTextField(
                         value = newName,
                         onValueChange = { newName = it },
-                        label = { Text("Student Full Name *") },
+                        label = { Text("Full Name *") },
                         colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.White, unfocusedTextColor = Color.White),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -187,7 +228,7 @@ fun StudentsScreen(
                         OutlinedTextField(
                             value = newClass,
                             onValueChange = { newClass = it },
-                            label = { Text("Class / Batch") },
+                            label = { Text("Class (e.g. BCA-3)") },
                             colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.White, unfocusedTextColor = Color.White),
                             modifier = Modifier.weight(1f)
                         )
@@ -257,7 +298,7 @@ fun StudentsScreen(
             title = { Text("Delete Student?", color = Color.White, fontWeight = FontWeight.Bold) },
             text = {
                 Text(
-                    "Are you sure you want to permanently delete '${st.name}' (Roll No: ${st.rollNo}) from the student directory?",
+                    "Are you sure you want to permanently delete '${st.name}' (Roll No: ${st.rollNo})?",
                     color = Color(0xFFCBD5E1)
                 )
             },
@@ -283,8 +324,9 @@ fun StudentsScreen(
 }
 
 @Composable
-fun StudentCard(
+fun StudentItemCard(
     student: Student,
+    isIssued: Boolean,
     onIssueClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
@@ -327,6 +369,20 @@ fun StudentCard(
                     color = Color(0xFF94A3B8),
                     fontSize = 12.sp
                 )
+                Spacer(modifier = Modifier.height(3.dp))
+                // Status Badge
+                Surface(
+                    color = if (isIssued) Color(0xFF064E3B) else Color(0xFF78350F),
+                    shape = RoundedCornerShape(4.dp)
+                ) {
+                    Text(
+                        text = if (isIssued) "✓ Certificate Issued" else "● Pending Issuance",
+                        color = if (isIssued) Color(0xFF34D399) else Color(0xFFFBBF24),
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                    )
+                }
             }
 
             // Quick Issue Button

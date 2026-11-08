@@ -11,3 +11,4 @@ data class Student(
     val phone: String = "",
     val collegeName: String = "NALANDA COLLEGE, BIHARSHARIF"
 )
+

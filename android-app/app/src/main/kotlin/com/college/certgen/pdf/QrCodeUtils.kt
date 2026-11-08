@@ -18,3 +18,4 @@ object QrCodeUtils {
         return bitmap
     }
 }
+

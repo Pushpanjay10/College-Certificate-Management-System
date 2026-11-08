@@ -4,19 +4,19 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.college.certgen.data.models.CertificateRecord
-import com.college.certgen.data.models.Student
-import com.college.certgen.data.models.UserAccount
+import com.college.certgen.data.models.*
 
 class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         const val DATABASE_NAME = "college_certgen_mobile.db"
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
 
         const val TABLE_USERS = "users"
         const val TABLE_STUDENTS = "students"
         const val TABLE_CERTIFICATES = "certificates"
+        const val TABLE_DEPARTMENTS = "departments"
+        const val TABLE_CLASSES = "classes"
 
         @Volatile
         private var instance: AppDatabaseHelper? = null
@@ -41,6 +41,29 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                 college_tagline TEXT NOT NULL,
                 hod_name TEXT NOT NULL,
                 principal_name TEXT NOT NULL
+            )
+        """.trimIndent())
+
+        db.execSQL("""
+            CREATE TABLE $TABLE_DEPARTMENTS (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                code TEXT NOT NULL,
+                name TEXT NOT NULL,
+                hod_name TEXT NOT NULL,
+                description TEXT,
+                college_name TEXT NOT NULL
+            )
+        """.trimIndent())
+
+        db.execSQL("""
+            CREATE TABLE $TABLE_CLASSES (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                class_code TEXT NOT NULL,
+                class_name TEXT NOT NULL,
+                department_code TEXT NOT NULL,
+                semester TEXT,
+                academic_year TEXT,
+                college_name TEXT NOT NULL
             )
         """.trimIndent())
 
@@ -75,6 +98,7 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                 issue_date TEXT NOT NULL,
                 signatory1 TEXT,
                 signatory2 TEXT,
+                template_name TEXT DEFAULT 'Academic Certificate',
                 pdf_path TEXT
             )
         """.trimIndent())
@@ -83,20 +107,48 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_CERTIFICATES")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_STUDENTS")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_USERS")
-        onCreate(db)
+        if (oldVersion < 2) {
+            try {
+                db.execSQL("ALTER TABLE $TABLE_CERTIFICATES ADD COLUMN template_name TEXT DEFAULT 'Academic Certificate'")
+            } catch (ignored: Exception) {}
+
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS $TABLE_DEPARTMENTS (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    code TEXT NOT NULL,
+                    name TEXT NOT NULL,
+                    hod_name TEXT NOT NULL,
+                    description TEXT,
+                    college_name TEXT NOT NULL
+                )
+            """.trimIndent())
+
+            db.execSQL("""
+                CREATE TABLE IF NOT EXISTS $TABLE_CLASSES (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    class_code TEXT NOT NULL,
+                    class_name TEXT NOT NULL,
+                    department_code TEXT NOT NULL,
+                    semester TEXT,
+                    academic_year TEXT,
+                    college_name TEXT NOT NULL
+                )
+            """.trimIndent())
+
+            seedDepartmentsAndClasses(db, "NALANDA COLLEGE, BIHARSHARIF")
+        }
     }
 
     private fun seedDefaultData(db: SQLiteDatabase) {
+        val nalandaCollege = "NALANDA COLLEGE, BIHARSHARIF"
+
         // 1. Seed Nalanda College Admin User
         val userCv = ContentValues().apply {
             put("username", "admin")
             put("password", "admin123")
             put("full_name", "Pushpanjay Patel")
             put("role", "Administrator")
-            put("college_name", "NALANDA COLLEGE, BIHARSHARIF")
+            put("college_name", nalandaCollege)
             put("university_name", "PATLIPUTRA UNIVERSITY, PATNA")
             put("college_tagline", "ESTABLISHED 1870 • CONSTITUENT UNIT OF PATLIPUTRA UNIVERSITY")
             put("hod_name", "Prof. Parmanand Prasad (BCA In-charge)")
@@ -104,7 +156,10 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         }
         db.insert(TABLE_USERS, null, userCv)
 
-        // 2. Seed 120 BCA-3rd Year students for Nalanda College
+        // 2. Seed Departments & Classes
+        seedDepartmentsAndClasses(db, nalandaCollege)
+
+        // 3. Seed 120 BCA-3rd Year students for Nalanda College
         val studentNames = arrayOf(
             "MURLIDHAR YADAV", "BALI KUMAR", "ANANT RAJ", "AMBIKA KUMARI", "RAUSHAN KUMAR",
             "ADITI GUPTA", "ANJALI GUPTA", "SUMIT KUMAR", "SHRUTI SHARMA", "HIMANSHU KUMAR",
@@ -149,9 +204,61 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                 put("class_code", "BCA-3")
                 put("email", email)
                 put("phone", phone)
-                put("college_name", "NALANDA COLLEGE, BIHARSHARIF")
+                put("college_name", nalandaCollege)
             }
             db.insert(TABLE_STUDENTS, null, studentCv)
+        }
+    }
+
+    private fun seedDepartmentsAndClasses(db: SQLiteDatabase, collegeName: String) {
+        val depts = arrayOf(
+            Triple("BCA", "Bachelor of Computer Applications", "Prof. Parmanand Prasad (BCA In-charge)"),
+            Triple("MAC", "Master of Applied Computing", "Prof. Rajesh Sharma"),
+            Triple("MBA", "Master of Business Administration", "Dr. Ananya Mishra"),
+            Triple("BBA", "Bachelor of Business Administration", "Prof. Sanjay Verma"),
+            Triple("BA", "Bachelor of Arts", "Prof. Ramashankar Prasad"),
+            Triple("MA", "Master of Arts", "Dr. Sunita Kumari")
+        )
+
+        for ((code, name, hod) in depts) {
+            val cv = ContentValues().apply {
+                put("code", code)
+                put("name", name)
+                put("hod_name", hod)
+                put("description", "Department of $name at $collegeName")
+                put("college_name", collegeName)
+            }
+            db.insert(TABLE_DEPARTMENTS, null, cv)
+        }
+
+        val classes = arrayOf(
+            Triple("BCA-1", "BCA 1st Year (Sem I & II)", "BCA"),
+            Triple("BCA-2", "BCA 2nd Year (Sem III & IV)", "BCA"),
+            Triple("BCA-3", "BCA 3rd Year (Sem V & VI)", "BCA"),
+            Triple("MAC-1", "MAC 1st Year", "MAC"),
+            Triple("MAC-2", "MAC 2nd Year", "MAC"),
+            Triple("MBA-1", "MBA 1st Year", "MBA"),
+            Triple("MBA-2", "MBA 2nd Year", "MBA"),
+            Triple("BBA-1", "BBA 1st Year", "BBA"),
+            Triple("BBA-2", "BBA 2nd Year", "BBA"),
+            Triple("BBA-3", "BBA 3rd Year", "BBA"),
+            Triple("BA-1", "BA 1st Year", "BA"),
+            Triple("BA-2", "BA 2nd Year", "BA"),
+            Triple("BA-3", "BA 3rd Year", "BA"),
+            Triple("MA-1", "MA 1st Year", "MA"),
+            Triple("MA-2", "MA 2nd Year", "MA")
+        )
+
+        for ((code, name, dept) in classes) {
+            val cv = ContentValues().apply {
+                put("class_code", code)
+                put("class_name", name)
+                put("department_code", dept)
+                put("semester", "Semester Final")
+                put("academic_year", "2023-2026")
+                put("college_name", collegeName)
+            }
+            db.insert(TABLE_CLASSES, null, cv)
         }
     }
 
@@ -219,7 +326,61 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             put("principal_name", user.principalName)
         }
         val id = db.insert(TABLE_USERS, null, cv)
-        return id != -1L
+        if (id != -1L) {
+            seedDepartmentsAndClasses(db, user.collegeName)
+            return true
+        }
+        return false
+    }
+
+    // --- Department & Class operations ---
+    fun getDepartments(collegeName: String): List<Department> {
+        val list = mutableListOf<Department>()
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_DEPARTMENTS WHERE college_name = ? ORDER BY id ASC",
+            arrayOf(collegeName)
+        )
+        cursor.use {
+            while (it.moveToNext()) {
+                list.add(
+                    Department(
+                        id = it.getLong(it.getColumnIndexOrThrow("id")),
+                        code = it.getString(it.getColumnIndexOrThrow("code")),
+                        name = it.getString(it.getColumnIndexOrThrow("name")),
+                        hodName = it.getString(it.getColumnIndexOrThrow("hod_name")),
+                        description = it.getString(it.getColumnIndexOrThrow("description")),
+                        collegeName = it.getString(it.getColumnIndexOrThrow("college_name"))
+                    )
+                )
+            }
+        }
+        return list
+    }
+
+    fun getClasses(collegeName: String): List<SchoolClass> {
+        val list = mutableListOf<SchoolClass>()
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_CLASSES WHERE college_name = ? ORDER BY id ASC",
+            arrayOf(collegeName)
+        )
+        cursor.use {
+            while (it.moveToNext()) {
+                list.add(
+                    SchoolClass(
+                        id = it.getLong(it.getColumnIndexOrThrow("id")),
+                        classCode = it.getString(it.getColumnIndexOrThrow("class_code")),
+                        className = it.getString(it.getColumnIndexOrThrow("class_name")),
+                        departmentCode = it.getString(it.getColumnIndexOrThrow("department_code")),
+                        semester = it.getString(it.getColumnIndexOrThrow("semester")),
+                        academicYear = it.getString(it.getColumnIndexOrThrow("academic_year")),
+                        collegeName = it.getString(it.getColumnIndexOrThrow("college_name"))
+                    )
+                )
+            }
+        }
+        return list
     }
 
     // --- Student operations ---
@@ -229,6 +390,33 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         val cursor = db.rawQuery(
             "SELECT * FROM $TABLE_STUDENTS WHERE college_name = ? ORDER BY id ASC",
             arrayOf(collegeName)
+        )
+        cursor.use {
+            while (it.moveToNext()) {
+                list.add(
+                    Student(
+                        id = it.getLong(it.getColumnIndexOrThrow("id")),
+                        rollNo = it.getString(it.getColumnIndexOrThrow("roll_no")),
+                        name = it.getString(it.getColumnIndexOrThrow("name")),
+                        regNo = it.getString(it.getColumnIndexOrThrow("reg_no")),
+                        departmentCode = it.getString(it.getColumnIndexOrThrow("department_code")),
+                        classCode = it.getString(it.getColumnIndexOrThrow("class_code")),
+                        email = it.getString(it.getColumnIndexOrThrow("email")),
+                        phone = it.getString(it.getColumnIndexOrThrow("phone")),
+                        collegeName = it.getString(it.getColumnIndexOrThrow("college_name"))
+                    )
+                )
+            }
+        }
+        return list
+    }
+
+    fun getStudentsByClass(collegeName: String, classCode: String): List<Student> {
+        val list = mutableListOf<Student>()
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_STUDENTS WHERE college_name = ? AND class_code = ? ORDER BY id ASC",
+            arrayOf(collegeName, classCode)
         )
         cursor.use {
             while (it.moveToNext()) {
@@ -271,6 +459,14 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         return db.delete(TABLE_STUDENTS, "id = ?", arrayOf(id.toString())) > 0
     }
 
+    fun isCertificateIssuedForStudent(studentId: Long): Boolean {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT COUNT(*) FROM $TABLE_CERTIFICATES WHERE student_id = ?", arrayOf(studentId.toString()))
+        return cursor.use {
+            if (it.moveToFirst()) it.getInt(0) > 0 else false
+        }
+    }
+
     // --- Certificate operations ---
     fun getCertificates(collegeName: String): List<CertificateRecord> {
         val list = mutableListOf<CertificateRecord>()
@@ -298,6 +494,7 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                         issueDate = it.getString(it.getColumnIndexOrThrow("issue_date")),
                         signatory1 = it.getString(it.getColumnIndexOrThrow("signatory1")),
                         signatory2 = it.getString(it.getColumnIndexOrThrow("signatory2")),
+                        templateName = try { it.getString(it.getColumnIndexOrThrow("template_name")) } catch (e: Exception) { "Academic Certificate" },
                         pdfPath = it.getString(it.getColumnIndexOrThrow("pdf_path"))
                     )
                 )
@@ -316,13 +513,14 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             put("reg_no", cert.regNo)
             put("department", cert.department)
             put("class_name", cert.className)
-            put("universityName", cert.universityName)
+            put("university_name", cert.universityName)
             put("college_name", cert.collegeName)
             put("certificate_title", cert.certificateTitle)
             put("remarks", cert.remarks)
             put("issue_date", cert.issueDate)
             put("signatory1", cert.signatory1)
             put("signatory2", cert.signatory2)
+            put("template_name", cert.templateName)
             put("pdf_path", cert.pdfPath)
         }
         return db.insert(TABLE_CERTIFICATES, null, cv)
@@ -357,6 +555,7 @@ class AppDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                     issueDate = it.getString(it.getColumnIndexOrThrow("issue_date")),
                     signatory1 = it.getString(it.getColumnIndexOrThrow("signatory1")),
                     signatory2 = it.getString(it.getColumnIndexOrThrow("signatory2")),
+                    templateName = try { it.getString(it.getColumnIndexOrThrow("template_name")) } catch (e: Exception) { "Academic Certificate" },
                     pdfPath = it.getString(it.getColumnIndexOrThrow("pdf_path"))
                 )
             } else null

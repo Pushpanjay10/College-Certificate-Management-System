@@ -12,3 +12,4 @@ data class UserAccount(
     val hodName: String = "Prof. Parmanand Prasad (BCA In-charge)",
     val principalName: String = "Prof. (Dr.) Ramakant Prasad (Principal)"
 )
+

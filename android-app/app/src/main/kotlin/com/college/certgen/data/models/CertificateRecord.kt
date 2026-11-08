@@ -16,5 +16,6 @@ data class CertificateRecord(
     val issueDate: String,
     val signatory1: String,
     val signatory2: String,
+    val templateName: String = "Academic Certificate",
     val pdfPath: String = ""
 )
