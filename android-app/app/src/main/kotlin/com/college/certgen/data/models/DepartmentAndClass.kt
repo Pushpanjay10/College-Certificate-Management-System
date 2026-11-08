@@ -18,3 +18,4 @@ data class SchoolClass(
     val academicYear: String,
     val collegeName: String
 )
+

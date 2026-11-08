@@ -40,7 +40,7 @@ Section "Install"
   
   ; Bundled Private Windows Java 17 Runtime Environment
   SetOutPath "$INSTDIR\jre"
-  File /r "windows_jre\*.*"
+  File /r "windows_jre/*"
   
   SetOutPath "$INSTDIR"
   
