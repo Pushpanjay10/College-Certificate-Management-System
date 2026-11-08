@@ -45,7 +45,28 @@ Built with **Java 17**, **FlatLaf (Modern macOS & Windows 11 UI/UX)**, **OpenPDF
 
 ---
 
+## 📱 Android Mobile App
+
+Run **College Certificate Management System** directly on your Android phone!
+
+- **Direct APK Download**: [CollegeCertificateManagementSystem.apk](https://github.com/Pushpanjay10/College-Certificate-Management-System/releases/download/v1.0.0/CollegeCertificateManagementSystem.apk)
+- **Features**:
+  - Native **Jetpack Compose + Material 3** UI.
+  - Multi-Account Login / College Registration.
+  - Complete Student Directory with search, add, delete, and pre-loaded BCA-3 student records.
+  - Real-Time Certificate Studio with live certificate canvas preview.
+  - Instant High-Resolution PDF generation via Android's native graphics engine.
+  - Integrated QR Code generation and instant Certificate Verification.
+  - One-Tap Share to WhatsApp, Telegram, Gmail, or Print directly from your phone.
+
+---
+
 ## 🚀 Quick Start
+
+### Android Phone
+1. Download [`CollegeCertificateManagementSystem.apk`](https://github.com/Pushpanjay10/College-Certificate-Management-System/releases/download/v1.0.0/CollegeCertificateManagementSystem.apk).
+2. Tap to install on your Android device (enable "Install unknown apps" if prompted).
+3. Open the app, 1-tap login as Nalanda College Admin, and generate certificates on the go!
 
 ### Windows
 - **Direct Run**: Double-click `CollegeCertificateManagementSystem.exe`

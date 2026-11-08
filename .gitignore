@@ -6,6 +6,11 @@ target/
 *.ear
 *.zip
 *.exe
+*.apk
+.gradle/
+android-app/**/build/
+android-app/.gradle/
+android-app/local.properties
 windows-dist/
 
 # JDK / Runtimes
