@@ -34,3 +34,4 @@ Section
   ; 3. If neither worked, alert user with descriptive dialog
   MessageBox MB_ICONSTOP "Unable to launch College Certificate Management System.$\n$\nCould not find CollegeCertGen-Pro.jar or bundled Java 17 runtime in:$\n$EXEDIR$\n$\nPlease run CollegeCertificateManagementSystem-Installer.exe to reinstall."
 SectionEnd
+

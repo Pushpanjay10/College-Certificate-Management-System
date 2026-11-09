@@ -1,0 +1,27 @@
+1 ICON "src/main/resources/images/app_icon.ico"
+
+1 VERSIONINFO
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0,0
+FILEOS 0x40004
+FILETYPE 0x1
+{
+BLOCK "StringFileInfo"
+{
+    BLOCK "040904B0"
+    {
+        VALUE "CompanyName", "College Certificate Systems"
+        VALUE "FileDescription", "College Certificate Management System"
+        VALUE "FileVersion", "1.0.0.0"
+        VALUE "InternalName", "CollegeCertificateManagementSystem"
+        VALUE "LegalCopyright", "Copyright (C) 2026"
+        VALUE "OriginalFilename", "CollegeCertificateManagementSystem.exe"
+        VALUE "ProductName", "College Certificate Management System"
+        VALUE "ProductVersion", "1.0.0.0"
+    }
+}
+BLOCK "VarFileInfo"
+{
+    VALUE "Translation", 0x0409, 0x04B0
+}
+}
