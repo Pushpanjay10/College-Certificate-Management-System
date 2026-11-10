@@ -73,10 +73,10 @@ public class DatabaseSettingsView extends JPanel {
         JPanel actionsBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         actionsBox.setOpaque(false);
 
-        JButton btnTest = UIUtils.createSecondaryButton("⚡ Test Connection");
+        JButton btnTest = UIUtils.createSecondaryButton("Test Connection");
         btnTest.addActionListener(e -> testActiveConfiguration());
 
-        JButton btnSave = UIUtils.createPrimaryButton("💾 Apply & Switch Database");
+        JButton btnSave = UIUtils.createPrimaryButton("Apply & Switch Database");
         btnSave.addActionListener(e -> applyConfiguration());
 
         actionsBox.add(btnTest);
@@ -299,7 +299,7 @@ public class DatabaseSettingsView extends JPanel {
 
     private void updateStatusLabel() {
         DatabaseConfig cfg = DatabaseService.getInstance().getCurrentConfig();
-        lblActiveStatus.setText("Active Engine: " + cfg.getType().getDisplayName() + "  |  Status: Connected ✓");
+        lblActiveStatus.setText("Active Engine: " + cfg.getType().getDisplayName() + "  |  Status: Connected (Active)");
     }
 
     private DatabaseConfig buildConfigFromInputs() {

@@ -104,8 +104,7 @@ public class MainFrame extends JFrame {
         if (logoIcon != null) {
             iconLabel = new JLabel(logoIcon);
         } else {
-            iconLabel = new JLabel("🎓");
-            iconLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 28));
+            iconLabel = new JLabel(UIUtils.getNavIcon("cert", false));
         }
 
         JPanel brandText = new JPanel(new GridLayout(2, 1, 0, 2));
@@ -133,16 +132,18 @@ public class MainFrame extends JFrame {
         navList.setLayout(new BoxLayout(navList, BoxLayout.Y_AXIS));
         navList.setOpaque(false);
 
-        addNavItem(navList, "dashboard", "📊  Dashboard");
-        addNavItem(navList, "departments", "🏛  Departments");
-        addNavItem(navList, "classes", "📚  Classes & Semesters");
-        addNavItem(navList, "students", "👨‍🎓  Students Directory");
-        addNavItem(navList, "cert_gen", "📜  Certificate Studio");
-        addNavItem(navList, "cert_history", "📁  Issued Records");
-        addNavItem(navList, "db_settings", "⚙  Database Settings");
+        addNavItem(navList, "dashboard", "Dashboard");
+        addNavItem(navList, "departments", "Departments");
+        addNavItem(navList, "classes", "Classes & Semesters");
+        addNavItem(navList, "students", "Students Directory");
+        addNavItem(navList, "cert_gen", "Certificate Studio");
+        addNavItem(navList, "cert_history", "Issued Records");
+        addNavItem(navList, "db_settings", "Database Settings");
 
         // Software Quickstart Guide Button
-        JButton btnGuide = new JButton("❓  Software Guide");
+        JButton btnGuide = new JButton("Software Guide");
+        btnGuide.setIcon(UIUtils.getNavIcon("guide", false));
+        btnGuide.setIconTextGap(12);
         btnGuide.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnGuide.setForeground(new Color(199, 210, 254));
         btnGuide.setContentAreaFilled(false);
@@ -176,7 +177,9 @@ public class MainFrame extends JFrame {
         userInfo.add(lblUserName);
         userInfo.add(lblUserRole);
 
-        JButton btnLogout = new JButton("🚪 Logout");
+        JButton btnLogout = new JButton("Logout");
+        btnLogout.setIcon(UIUtils.getNavIcon("logout", false));
+        btnLogout.setIconTextGap(8);
         btnLogout.setFont(UIUtils.FONT_BOLD);
         btnLogout.setForeground(new Color(248, 113, 113));
         btnLogout.setBackground(new Color(30, 41, 59));
@@ -198,6 +201,8 @@ public class MainFrame extends JFrame {
 
     private void addNavItem(JPanel container, String pageKey, String label) {
         JButton btn = new JButton(label);
+        btn.setIcon(UIUtils.getNavIcon(pageKey, false));
+        btn.setIconTextGap(12);
         btn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         btn.setForeground(new Color(203, 213, 225));
         btn.setBackground(UIUtils.SIDEBAR_BG);
@@ -219,10 +224,12 @@ public class MainFrame extends JFrame {
         this.activePage = pageKey;
         cardLayout.show(contentPanel, pageKey);
 
-        // Update active nav styling
+        // Update active nav styling & icons
         for (Map.Entry<String, JButton> entry : navButtons.entrySet()) {
             JButton b = entry.getValue();
-            if (entry.getKey().equals(pageKey)) {
+            boolean isSelected = entry.getKey().equals(pageKey);
+            b.setIcon(UIUtils.getNavIcon(entry.getKey(), isSelected));
+            if (isSelected) {
                 b.setBackground(UIUtils.PRIMARY);
                 b.setForeground(Color.WHITE);
                 b.setFont(new Font("Segoe UI", Font.BOLD, 13));

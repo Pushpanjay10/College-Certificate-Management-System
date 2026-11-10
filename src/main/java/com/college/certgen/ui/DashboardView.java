@@ -56,7 +56,7 @@ public class DashboardView extends JPanel {
         JButton btnAddStudent = UIUtils.createSecondaryButton("+ Add Student");
         btnAddStudent.addActionListener(e -> mainFrame.showPage("students"));
 
-        JButton btnDbSettings = UIUtils.createSecondaryButton("⚙️ DB Setup");
+        JButton btnDbSettings = UIUtils.createSecondaryButton("DB Setup");
         btnDbSettings.addActionListener(e -> mainFrame.showPage("db_settings"));
 
         actionsBox.add(btnAddStudent);
@@ -81,10 +81,10 @@ public class DashboardView extends JPanel {
         lblClassesCount = new JLabel("0");
         lblCertsCount = new JLabel("0");
 
-        statsGrid.add(createKpiCard("Total Enrolled Students", lblStudentsCount, "👨‍🎓", new Color(59, 130, 246)));
-        statsGrid.add(createKpiCard("Academic Departments", lblDeptsCount, "🏛️", new Color(16, 185, 129)));
-        statsGrid.add(createKpiCard("Active Classes / Courses", lblClassesCount, "🎓", new Color(245, 158, 11)));
-        statsGrid.add(createKpiCard("Certificates Issued", lblCertsCount, "📜", new Color(139, 92, 246)));
+        statsGrid.add(createKpiCard("Total Enrolled Students", lblStudentsCount, "student", new Color(59, 130, 246)));
+        statsGrid.add(createKpiCard("Academic Departments", lblDeptsCount, "dept", new Color(16, 185, 129)));
+        statsGrid.add(createKpiCard("Active Classes / Courses", lblClassesCount, "class", new Color(245, 158, 11)));
+        statsGrid.add(createKpiCard("Certificates Issued", lblCertsCount, "cert", new Color(139, 92, 246)));
 
         centerPanel.add(statsGrid, BorderLayout.NORTH);
 
@@ -161,7 +161,7 @@ public class DashboardView extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
     }
 
-    private JPanel createKpiCard(String title, JLabel countLabel, String icon, Color accentColor) {
+    private JPanel createKpiCard(String title, JLabel countLabel, String iconKey, Color accentColor) {
         JPanel card = new JPanel(new BorderLayout(12, 0));
         card.setBackground(UIUtils.CARD_BG);
         card.setBorder(BorderFactory.createCompoundBorder(
@@ -169,9 +169,9 @@ public class DashboardView extends JPanel {
                 new EmptyBorder(16, 16, 16, 16)
         ));
 
-        // Icon Box
-        JLabel lblIcon = new JLabel(icon, SwingConstants.CENTER);
-        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 28));
+        // Icon Box using VectorIcon (Guaranteed crisp rendering on all platforms without font issues)
+        JLabel lblIcon = new JLabel("", SwingConstants.CENTER);
+        lblIcon.setIcon(UIUtils.getKpiIcon(iconKey, accentColor, 28));
         lblIcon.setOpaque(true);
         lblIcon.setBackground(new Color(accentColor.getRed(), accentColor.getGreen(), accentColor.getBlue(), 25));
         lblIcon.setPreferredSize(new Dimension(54, 54));

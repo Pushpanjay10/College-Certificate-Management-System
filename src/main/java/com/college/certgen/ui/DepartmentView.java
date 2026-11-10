@@ -64,7 +64,7 @@ public class DepartmentView extends JPanel {
         toolBar.setBorder(new EmptyBorder(0, 0, 14, 0));
 
         txtSearch = new JTextField();
-        txtSearch.putClientProperty("JTextField.placeholderText", "🔍 Search department by code or name...");
+        txtSearch.putClientProperty("JTextField.placeholderText", "Search department by code or name...");
         txtSearch.setFont(UIUtils.FONT_REGULAR);
         txtSearch.setPreferredSize(new Dimension(320, 36));
         txtSearch.addCaretListener(e -> filterData());
@@ -76,10 +76,10 @@ public class DepartmentView extends JPanel {
         JPanel btnWrap = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
         btnWrap.setOpaque(false);
 
-        JButton btnEdit = UIUtils.createSecondaryButton("✏️ Edit Selected");
+        JButton btnEdit = UIUtils.createSecondaryButton("Edit Selected");
         btnEdit.addActionListener(e -> editSelected());
 
-        JButton btnDelete = UIUtils.createDangerButton("🗑️ Delete");
+        JButton btnDelete = UIUtils.createDangerButton("Delete");
         btnDelete.addActionListener(e -> deleteSelected());
 
         btnWrap.add(btnEdit);

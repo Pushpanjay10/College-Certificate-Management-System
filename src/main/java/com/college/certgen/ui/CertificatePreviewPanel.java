@@ -196,10 +196,19 @@ public class CertificatePreviewPanel extends JPanel {
         g2.drawLine(w / 2 - 140, topHeaderY + 50, w / 2 + 140, topHeaderY + 50);
         g2.fillOval(w / 2 - 4, topHeaderY + 47, 8, 8);
 
-        // 5. Certificate Title Banner
+        // 5. Certificate Title Banner (Auto-fit font size so it never intersects borders)
         g2.setColor(accentColor);
-        g2.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 28));
-        String title = cert.getCertificateTitle() != null ? cert.getCertificateTitle() : "CERTIFICATE OF EXCELLENCE";
+        String title = cert.getCertificateTitle() != null ? cert.getCertificateTitle().trim() : "CERTIFICATE OF EXCELLENCE";
+        int maxTitleWidth = w - 190;
+        int titleFontSize = 26;
+        Font titleFont = new Font("Serif", Font.BOLD | Font.ITALIC, titleFontSize);
+        FontMetrics fmTitle = g2.getFontMetrics(titleFont);
+        while (fmTitle.stringWidth(title) > maxTitleWidth && titleFontSize > 13) {
+            titleFontSize--;
+            titleFont = new Font("Serif", Font.BOLD | Font.ITALIC, titleFontSize);
+            fmTitle = g2.getFontMetrics(titleFont);
+        }
+        g2.setFont(titleFont);
         drawCenteredString(g2, title, w, topHeaderY + 84);
 
         // Subtitle "THIS IS PROUDLY PRESENTED TO"
@@ -222,41 +231,49 @@ public class CertificatePreviewPanel extends JPanel {
 
         // Student Identifiers (Roll No / Reg No)
         g2.setColor(new Color(51, 65, 85));
-        g2.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        g2.setFont(new Font("SansSerif", Font.PLAIN, 12));
         String idDetails = String.format("College Roll No: %s        University Reg No: %s",
                 cert.getRollNo() != null ? cert.getRollNo() : "NC/BCA/23/001",
                 cert.getRegNo() != null ? cert.getRegNo() : "23NCBCA0101");
-        drawCenteredString(g2, idDetails, w, topHeaderY + 184);
+        drawCenteredString(g2, idDetails, w, topHeaderY + 182);
 
-        // Academic / Event Description lines with clean word wrapping
+        // Academic / Event Description lines with clean word wrapping and comfortable line spacing
         g2.setColor(new Color(51, 65, 85));
         g2.setFont(new Font("SansSerif", Font.PLAIN, 12));
 
-        String descLine1;
-        if (template.contains("Sports")) {
-            descLine1 = String.format("for outstanding athletic performance, sporting merit, and exemplary teamwork in %s,",
-                    cert.getClassName() != null ? cert.getClassName() : "Annual Athletic Meet");
-        } else if (template.contains("Cultural")) {
-            descLine1 = String.format("for vibrant artistic expression, stage excellence, and noteworthy contribution in %s,",
-                    cert.getClassName() != null ? cert.getClassName() : "Annual Cultural Fest");
-        } else if (template.contains("Tech")) {
-            descLine1 = String.format("for exemplary technical innovation, coding problem-solving, and inventive execution in %s,",
-                    cert.getClassName() != null ? cert.getClassName() : "Techno-Hackathon 2026");
-        } else {
-            descLine1 = String.format("for exemplary scholastic performance and successful completion of curriculum requirements in %s,",
-                    cert.getClassName() != null ? cert.getClassName() : "Bachelor of Computer Applications (BCA)");
+        String classDeptInfo = "";
+        if (cert.getClassName() != null && !cert.getClassName().trim().isEmpty()) {
+            classDeptInfo = "of class " + cert.getClassName().trim();
+            if (cert.getDepartment() != null && !cert.getDepartment().trim().isEmpty()) {
+                classDeptInfo += ", Department of " + cert.getDepartment().trim();
+            }
+            classDeptInfo += ", ";
+        } else if (cert.getDepartment() != null && !cert.getDepartment().trim().isEmpty()) {
+            classDeptInfo = "Department of " + cert.getDepartment().trim() + ", ";
         }
-
-        String deptStr = (cert.getDepartment() != null && !cert.getDepartment().trim().isEmpty())
-                ? "Department of " + cert.getDepartment() + ". "
-                : "";
 
         String remarks = (cert.getRemarks() != null && !cert.getRemarks().trim().isEmpty())
                 ? cert.getRemarks().trim()
-                : "Awarded this certificate in recognition of merit and high honor.";
+                : "";
 
-        String fullDescription = descLine1 + " " + deptStr + remarks;
-        drawWrappedCenteredString(g2, fullDescription, w / 2, topHeaderY + 208, w - 180, 18);
+        if (remarks.isEmpty()) {
+            if (template.contains("Sports")) {
+                remarks = "for outstanding athletic performance, sporting merit, and exemplary teamwork in the Annual Sports Meet.";
+            } else if (template.contains("Cultural")) {
+                remarks = "for vibrant artistic expression, stage excellence, and noteworthy contribution in the Annual Cultural Fest.";
+            } else if (template.contains("Tech")) {
+                remarks = "for exemplary technical innovation, algorithmic problem-solving, and inventive execution at Tech Fest 2026.";
+            } else {
+                remarks = "for exemplary scholastic performance and successful completion of curriculum requirements.";
+            }
+        }
+
+        String formattedRemarks = (remarks.toLowerCase().startsWith("for ") || remarks.toLowerCase().startsWith("in "))
+                ? remarks.substring(0, 1).toLowerCase() + remarks.substring(1)
+                : remarks;
+
+        String fullDescription = classDeptInfo + formattedRemarks;
+        drawWrappedCenteredString(g2, fullDescription, w / 2, topHeaderY + 206, w - 200, 22);
 
         // 6. Badges & Seals (Positioned cleanly at exact horizontal center!)
         int sealCX = w / 2;
@@ -453,10 +470,20 @@ public class CertificatePreviewPanel extends JPanel {
         g2.setStroke(new BasicStroke(1.5f));
         g2.drawOval(cx - r + 3, cy - r + 3, (r - 3) * 2, (r - 3) * 2);
 
-        g2.setColor(new Color(120, 53, 15));
-        g2.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
-        g2.drawString("🏆", cx - 10, cy + 5);
+        // Crisp vector gold star
+        g2.setColor(new Color(146, 64, 14));
+        int points = 5;
+        int[] sx = new int[points * 2];
+        int[] sy = new int[points * 2];
+        for (int i = 0; i < points * 2; i++) {
+            double angle = i * Math.PI / points - Math.PI / 2;
+            int radius = (i % 2 == 0) ? 12 : 5;
+            sx[i] = (int) (cx + radius * Math.cos(angle));
+            sy[i] = (int) (cy - 1 + radius * Math.sin(angle));
+        }
+        g2.fillPolygon(sx, sy, points * 2);
 
+        g2.setColor(new Color(120, 53, 15));
         g2.setFont(new Font("SansSerif", Font.BOLD, 7));
         g2.drawString("SPORTS MERIT", cx - 25, cy + 18);
     }
@@ -478,8 +505,11 @@ public class CertificatePreviewPanel extends JPanel {
         g2.setStroke(new BasicStroke(1.5f));
         g2.drawPolygon(hx, hy, 6);
 
-        g2.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 16));
-        g2.drawString("⚡", cx - 8, cy + 3);
+        // Crisp vector lightning bolt
+        g2.setColor(cyan);
+        int[] lx = {cx, cx + 5, cx + 1, cx + 6, cx - 5, cx - 1, cx - 6};
+        int[] ly = {cy - 12, cy - 12, cy - 2, cy - 2, cy + 8, cy, cy};
+        g2.fillPolygon(lx, ly, 7);
 
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("SansSerif", Font.BOLD, 7));

@@ -371,4 +371,107 @@ public class UIUtils {
         };
         table.setDefaultRenderer(Object.class, renderer);
     }
+
+    public static Icon getNavIcon(String pageKey, boolean active) {
+        Color color = active ? Color.WHITE : new Color(148, 163, 184);
+        return new VectorIcon(pageKey, color, 18);
+    }
+
+    public static Icon getKpiIcon(String key, Color color, int size) {
+        return new VectorIcon(key, color, size);
+    }
+
+    public static class VectorIcon implements Icon {
+        private final String key;
+        private final Color color;
+        private final int size;
+
+        public VectorIcon(String key, Color color, int size) {
+            this.key = key != null ? key.toLowerCase() : "";
+            this.color = color;
+            this.size = size;
+        }
+
+        @Override
+        public int getIconWidth() { return size; }
+
+        @Override
+        public int getIconHeight() { return size; }
+
+        @Override
+        public void paintIcon(Component c, Graphics g, int x, int y) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+            g2.translate(x, y);
+            double scale = size / 24.0;
+            g2.scale(scale, scale);
+            g2.setColor(color);
+            g2.setStroke(new BasicStroke(1.8f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
+            if (key.contains("dashboard")) {
+                // 4 modern tiles grid
+                g2.fillRoundRect(2, 2, 8, 8, 3, 3);
+                g2.fillRoundRect(14, 2, 8, 8, 3, 3);
+                g2.fillRoundRect(2, 14, 8, 8, 3, 3);
+                g2.fillRoundRect(14, 14, 8, 8, 3, 3);
+            } else if (key.contains("dept") || key.contains("department")) {
+                // Classical university building / columns
+                g2.fillPolygon(new int[]{2, 12, 22}, new int[]{7, 2, 7}, 3);
+                g2.fillRect(3, 8, 18, 2);
+                g2.fillRect(4, 10, 3, 10);
+                g2.fillRect(10, 10, 4, 10);
+                g2.fillRect(17, 10, 3, 10);
+                g2.fillRect(2, 20, 20, 2);
+            } else if (key.contains("class")) {
+                // Stacked book layers
+                g2.drawRoundRect(3, 4, 18, 5, 2, 2);
+                g2.drawRoundRect(3, 10, 18, 5, 2, 2);
+                g2.drawRoundRect(3, 16, 18, 5, 2, 2);
+                g2.drawLine(7, 4, 7, 21);
+            } else if (key.contains("student")) {
+                // Graduation cap
+                g2.fillPolygon(new int[]{12, 22, 12, 2}, new int[]{4, 9, 14, 9}, 4);
+                g2.fillArc(6, 11, 12, 8, 180, 180);
+                g2.drawLine(20, 9, 20, 18);
+                g2.fillOval(19, 17, 3, 3);
+            } else if (key.contains("cert_gen") || (key.contains("cert") && !key.contains("history"))) {
+                // Certificate document with award ribbon
+                g2.drawRoundRect(3, 2, 14, 20, 3, 3);
+                g2.drawLine(6, 6, 14, 6);
+                g2.drawLine(6, 10, 14, 10);
+                g2.drawLine(6, 14, 11, 14);
+                g2.fillOval(14, 13, 7, 7);
+                g2.drawLine(17, 20, 19, 23);
+                g2.drawLine(18, 20, 16, 23);
+            } else if (key.contains("history") || key.contains("record")) {
+                // Archive folder
+                g2.drawRoundRect(2, 6, 20, 15, 3, 3);
+                g2.fillPolygon(new int[]{2, 8, 11, 20, 20, 2}, new int[]{6, 6, 3, 3, 6, 6}, 6);
+                g2.drawLine(6, 11, 14, 11);
+                g2.drawLine(6, 15, 18, 15);
+            } else if (key.contains("db") || key.contains("setting")) {
+                // Database cylinders
+                g2.drawOval(4, 3, 16, 5);
+                g2.drawArc(4, 9, 16, 5, 180, 180);
+                g2.drawArc(4, 15, 16, 5, 180, 180);
+                g2.drawLine(4, 5, 4, 17);
+                g2.drawLine(20, 5, 20, 17);
+            } else if (key.contains("guide")) {
+                // Information / Question badge
+                g2.drawOval(2, 2, 20, 20);
+                g2.setFont(new Font("Segoe UI", Font.BOLD, 13));
+                g2.drawString("?", 9, 17);
+            } else if (key.contains("logout")) {
+                // Door & exit arrow
+                g2.drawRect(3, 3, 10, 18);
+                g2.drawLine(10, 12, 21, 12);
+                g2.drawLine(17, 8, 21, 12);
+                g2.drawLine(17, 16, 21, 12);
+            } else {
+                g2.fillOval(4, 4, 16, 16);
+            }
+            g2.dispose();
+        }
+    }
 }

@@ -45,7 +45,10 @@ public class SoftwareGuideDialog extends JDialog {
 
         ImageIcon logoIcon = UIUtils.getDefaultLogo(58, 58);
         if (logoIcon == null) logoIcon = UIUtils.getActiveCollegeLogo(58, 58);
-        JLabel lblLogo = (logoIcon != null) ? new JLabel(logoIcon) : new JLabel("🎓");
+        JLabel lblLogo = (logoIcon != null) ? new JLabel(logoIcon) : new JLabel();
+        if (logoIcon == null) {
+            lblLogo.setIcon(UIUtils.getNavIcon("dashboard", false));
+        }
         headerPanel.add(lblLogo, BorderLayout.WEST);
 
         JPanel headerText = new JPanel();
@@ -72,43 +75,43 @@ public class SoftwareGuideDialog extends JDialog {
         grid.setOpaque(false);
 
         grid.add(createFeatureCard(
-                "🏢  College & Department Management",
+                "College & Department Management",
                 "• Configure institution name, university affiliation, and custom logo.\n" +
                 "• Manage departments: BCA, MCA, MBA, BBA, BA, MA, etc.\n" +
                 "• Set designated HODs / In-charges for automated digital signatures."
         ));
 
         grid.add(createFeatureCard(
-                "👥  Student Directory & Bulk Import",
+                "Student Directory & Bulk Import",
                 "• Store student enrollment with College Roll No & University Reg No.\n" +
                 "• Bulk import entire batches (100+ students) from CSV or Attendance sheets.\n" +
                 "• Permanent deletion protection: deleted records stay deleted."
         ));
 
         grid.add(createFeatureCard(
-                "🎨  Multi-Category Certificate Studio",
-                "• 🎓 Academic Excellence: Classic Blue & Gold with official seal.\n" +
-                "• 🎭 Cultural & Youth Fests: Royal purple & fuchsia artistic theme.\n" +
-                "• 🏅 Sports Merit: Athletic victory medals & speed track chevrons.\n" +
-                "• ⚡ Tech Fest: Slate & cyan cyber theme with hologram badge."
+                "Multi-Category Certificate Studio",
+                "• Academic Excellence: Classic Blue & Gold with official seal.\n" +
+                "• Cultural & Youth Fests: Royal purple & fuchsia artistic theme.\n" +
+                "• Sports Merit: Athletic victory medals & speed track chevrons.\n" +
+                "• Tech Fest: Slate & cyan cyber theme with hologram badge."
         ));
 
         grid.add(createFeatureCard(
-                "📱  Tamper-Proof Scannable QR Codes",
+                "Tamper-Proof Scannable QR Codes",
                 "• Every certificate embeds a real, scannable QR verification code.\n" +
                 "• Scan with any smartphone camera / Google Lens for instant verification.\n" +
                 "• Displays student name, roll, reg no, course, and verification status."
         ));
 
         grid.add(createFeatureCard(
-                "🖨️  Single & Batch PDF / PNG Export",
+                "Single & Batch PDF / PNG Export",
                 "• Export high-resolution, print-ready vector PDF certificates.\n" +
                 "• Pinned bottom footer: HOD & Principal signatures never overlap.\n" +
                 "• Real-time WYSIWYG zoomable preview with college watermarks."
         ));
 
         grid.add(createFeatureCard(
-                "🔒  100% Offline & Private Security",
+                "100% Offline & Private Security",
                 "• Embedded SQLite database stored locally in ~/.college_cert_gen.\n" +
                 "• Zero cloud dependency, zero subscription costs, no internet required.\n" +
                 "• Complete data ownership and local credential protection."
@@ -131,7 +134,7 @@ public class SoftwareGuideDialog extends JDialog {
         JPanel btnBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         btnBox.setOpaque(false);
 
-        JButton btnStart = UIUtils.createPrimaryButton("🚀 Got It, Let's Get Started!");
+        JButton btnStart = UIUtils.createPrimaryButton("Got It, Let's Get Started!");
         btnStart.setPreferredSize(new Dimension(230, 38));
         btnStart.addActionListener(e -> {
             if (chkDontShow.isSelected()) {

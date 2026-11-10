@@ -97,13 +97,13 @@ public class CertificateHistoryView extends JPanel {
         JPanel rightControls = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         rightControls.setOpaque(false);
 
-        JButton btnPreview = UIUtils.createPrimaryButton("👁 View Certificate");
+        JButton btnPreview = UIUtils.createPrimaryButton("View Certificate");
         btnPreview.addActionListener(e -> previewSelected());
 
-        JButton btnPdf = UIUtils.createSecondaryButton("📥 Download PDF");
+        JButton btnPdf = UIUtils.createSecondaryButton("Download PDF");
         btnPdf.addActionListener(e -> downloadPdfSelected());
 
-        JButton btnRefresh = UIUtils.createSecondaryButton("↻ Refresh");
+        JButton btnRefresh = UIUtils.createSecondaryButton("Refresh");
         btnRefresh.addActionListener(e -> refreshData());
 
         rightControls.add(btnPreview);
@@ -202,7 +202,7 @@ public class CertificateHistoryView extends JPanel {
         JButton btnClose = UIUtils.createSecondaryButton("Close");
         btnClose.addActionListener(e -> dlg.dispose());
 
-        JButton btnPdf = UIUtils.createPrimaryButton("📥 Save as PDF");
+        JButton btnPdf = UIUtils.createPrimaryButton("Save as PDF");
         btnPdf.addActionListener(e -> {
             dlg.dispose();
             downloadPdfForCert(cert);

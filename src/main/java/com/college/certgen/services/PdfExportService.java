@@ -110,9 +110,16 @@ public class PdfExportService {
             pSubHead.setSpacingAfter(10f);
             document.add(pSubHead);
 
-            // Certificate Title Banner
-            Font titleFont = FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 25, getTitleColor(template));
-            Paragraph pTitle = new Paragraph(cert.getCertificateTitle() != null ? cert.getCertificateTitle() : "CERTIFICATE OF EXCELLENCE", titleFont);
+            // Certificate Title Banner (Auto-scaled so long titles never cross borders)
+            String certTitle = cert.getCertificateTitle() != null ? cert.getCertificateTitle().trim() : "CERTIFICATE OF EXCELLENCE";
+            float titleSize = 25f;
+            if (certTitle.length() > 40) {
+                titleSize = 18f;
+            } else if (certTitle.length() > 28) {
+                titleSize = 21f;
+            }
+            Font titleFont = FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, titleSize, getTitleColor(template));
+            Paragraph pTitle = new Paragraph(certTitle, titleFont);
             pTitle.setAlignment(Element.ALIGN_CENTER);
             pTitle.setSpacingAfter(8f);
             document.add(pTitle);
@@ -135,38 +142,48 @@ public class PdfExportService {
             // Body Statement
             Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 11, new Color(51, 65, 85));
 
-            String descLine;
-            if (template.contains("Sports")) {
-                descLine = "for outstanding athletic performance, sporting merit, and exemplary teamwork in " +
-                        (cert.getClassName() != null ? cert.getClassName() : "Annual Athletic Meet") +
-                        ", Department of " + (cert.getDepartment() != null ? cert.getDepartment() : "Sports") + ".\n" +
-                        (cert.getRemarks() != null && !cert.getRemarks().isEmpty() ? cert.getRemarks() : "Awarded this certificate in recognition of athletic merit and dedication.");
-            } else if (template.contains("Cultural")) {
-                descLine = "for vibrant artistic expression, stage excellence, and noteworthy contribution in " +
-                        (cert.getClassName() != null ? cert.getClassName() : "Annual Cultural Fest") +
-                        ", Department of " + (cert.getDepartment() != null ? cert.getDepartment() : "Cultural Wing") + ".\n" +
-                        (cert.getRemarks() != null && !cert.getRemarks().isEmpty() ? cert.getRemarks() : "Awarded in celebration of creative talent and artistic brilliance.");
-            } else if (template.contains("Tech")) {
-                descLine = "for exemplary technical innovation, algorithmic problem solving, and inventive execution in " +
-                        (cert.getClassName() != null ? cert.getClassName() : "Techno-Hackathon 2026") +
-                        ", Department of " + (cert.getDepartment() != null ? cert.getDepartment() : "Computer Applications") + ".\n" +
-                        (cert.getRemarks() != null && !cert.getRemarks().isEmpty() ? cert.getRemarks() : "Awarded for technical brilliance, innovation, and coding excellence.");
-            } else {
-                descLine = "for exemplary scholastic performance and successful completion of curriculum requirements in " +
-                        (cert.getClassName() != null ? cert.getClassName() : "Bachelor of Computer Applications") +
-                        ", Department of " + (cert.getDepartment() != null ? cert.getDepartment() : "Computer Applications") + ".\n" +
-                        (cert.getRemarks() != null && !cert.getRemarks().isEmpty() ? cert.getRemarks() : "Demonstrated exceptional merit and high standard of scholarship.");
+            String classDeptInfo = "";
+            if (cert.getClassName() != null && !cert.getClassName().trim().isEmpty()) {
+                classDeptInfo = "of class " + cert.getClassName().trim();
+                if (cert.getDepartment() != null && !cert.getDepartment().trim().isEmpty()) {
+                    classDeptInfo += ", Department of " + cert.getDepartment().trim();
+                }
+                classDeptInfo += ", ";
+            } else if (cert.getDepartment() != null && !cert.getDepartment().trim().isEmpty()) {
+                classDeptInfo = "Department of " + cert.getDepartment().trim() + ", ";
             }
 
-            String bodyText = String.format("College Roll No: %s        University Reg No: %s\n%s",
+            String remarks = (cert.getRemarks() != null && !cert.getRemarks().trim().isEmpty())
+                    ? cert.getRemarks().trim()
+                    : "";
+
+            if (remarks.isEmpty()) {
+                if (template.contains("Sports")) {
+                    remarks = "for outstanding athletic performance, sporting merit, and exemplary teamwork in the Annual Sports Meet.";
+                } else if (template.contains("Cultural")) {
+                    remarks = "for vibrant artistic expression, stage excellence, and noteworthy contribution in the Annual Cultural Fest.";
+                } else if (template.contains("Tech")) {
+                    remarks = "for exemplary technical innovation, algorithmic problem-solving, and inventive execution at Tech Fest 2026.";
+                } else {
+                    remarks = "for exemplary scholastic performance and successful completion of curriculum requirements.";
+                }
+            }
+
+            String formattedRemarks = (remarks.toLowerCase().startsWith("for ") || remarks.toLowerCase().startsWith("in "))
+                    ? remarks.substring(0, 1).toLowerCase() + remarks.substring(1)
+                    : remarks;
+
+            String descSentence = classDeptInfo + formattedRemarks;
+
+            String bodyText = String.format("College Roll No: %s        University Reg No: %s\n\n%s",
                     cert.getRollNo() != null ? cert.getRollNo() : "NC/BCA/23/001",
                     cert.getRegNo() != null ? cert.getRegNo() : "23NCBCA0101",
-                    descLine
+                    descSentence
             );
 
             Paragraph pBody = new Paragraph(bodyText, bodyFont);
             pBody.setAlignment(Element.ALIGN_CENTER);
-            pBody.setLeading(16f);
+            pBody.setLeading(18f);
             pBody.setSpacingAfter(26f);
             document.add(pBody);
 

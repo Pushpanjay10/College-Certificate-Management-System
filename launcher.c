@@ -126,3 +126,4 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     CloseHandle(pi.hThread);
     return 0;
 }
+

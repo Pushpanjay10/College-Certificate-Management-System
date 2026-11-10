@@ -81,7 +81,7 @@ public class LoginFrame extends JFrame {
         brandHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         ImageIcon logoIcon = UIUtils.getAppLogo(62, 62);
-        JLabel logoLabel = (logoIcon != null) ? new JLabel(logoIcon) : new JLabel("🎓");
+        JLabel logoLabel = (logoIcon != null) ? new JLabel(logoIcon) : new JLabel();
         brandHeader.add(logoLabel);
 
         JPanel headerText = new JPanel(new GridLayout(2, 1, 0, 3));
@@ -135,7 +135,7 @@ public class LoginFrame extends JFrame {
                     String col = u.getCollegeName() != null && !u.getCollegeName().trim().isEmpty()
                             ? u.getCollegeName().trim()
                             : "Standard Institution";
-                    lblCollegeTag.setText("🏫 Institution: " + col);
+                    lblCollegeTag.setText("Institution: " + col);
                 }
             }
         });
@@ -319,7 +319,7 @@ public class LoginFrame extends JFrame {
         topHeader.setOpaque(false);
 
         ImageIcon logoSm = UIUtils.getAppLogo(46, 46);
-        JLabel lblLogo = (logoSm != null) ? new JLabel(logoSm) : new JLabel("🎓");
+        JLabel lblLogo = (logoSm != null) ? new JLabel(logoSm) : new JLabel();
         topHeader.add(lblLogo, BorderLayout.WEST);
 
         JPanel headerText = new JPanel(new GridLayout(2, 1, 0, 2));
@@ -443,7 +443,7 @@ public class LoginFrame extends JFrame {
         lblLogoPreview.setPreferredSize(new Dimension(44, 44));
         lblLogoPreview.setBorder(BorderFactory.createLineBorder(UIUtils.BORDER_COLOR, 1));
 
-        JButton btnChooseLogo = UIUtils.createSecondaryButton("📁 Choose Logo...");
+        JButton btnChooseLogo = UIUtils.createSecondaryButton("Choose Logo...");
         btnChooseLogo.setFont(UIUtils.FONT_SMALL);
 
         JLabel lblLogoFileName = new JLabel("Default App Logo");

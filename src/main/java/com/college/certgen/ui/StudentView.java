@@ -53,10 +53,10 @@ public class StudentView extends JPanel {
         JPanel actionsBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         actionsBox.setOpaque(false);
 
-        JButton btnImportCsv = UIUtils.createSecondaryButton("📥 Import CSV");
+        JButton btnImportCsv = UIUtils.createSecondaryButton("Import CSV");
         btnImportCsv.addActionListener(e -> importFromCsv());
 
-        JButton btnExportCsv = UIUtils.createSecondaryButton("📤 Export CSV");
+        JButton btnExportCsv = UIUtils.createSecondaryButton("Export CSV");
         btnExportCsv.addActionListener(e -> exportToCsv());
 
         JButton btnAdd = UIUtils.createPrimaryButton("+ Add Student");
@@ -113,7 +113,7 @@ public class StudentView extends JPanel {
         JPanel rightControls = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         rightControls.setOpaque(false);
 
-        JButton btnGenCert = UIUtils.createPrimaryButton("⚡ Issue Certificate");
+        JButton btnGenCert = UIUtils.createPrimaryButton("Issue Certificate");
         btnGenCert.addActionListener(e -> issueCertForSelected());
 
         JButton btnEdit = UIUtils.createSecondaryButton("Edit");
@@ -122,7 +122,7 @@ public class StudentView extends JPanel {
         JButton btnDelete = UIUtils.createDangerButton("Delete");
         btnDelete.addActionListener(e -> deleteSelected());
 
-        JButton btnRefresh = UIUtils.createSecondaryButton("↻ Refresh");
+        JButton btnRefresh = UIUtils.createSecondaryButton("Refresh");
         btnRefresh.addActionListener(e -> refreshData());
 
         rightControls.add(btnGenCert);
@@ -428,7 +428,7 @@ public class StudentView extends JPanel {
                 }
 
                 JOptionPane.showMessageDialog(this,
-                        String.format("CSV Import Finished!\n✓ Successfully imported: %d student(s)\n⚠ Skipped / Duplicates: %d", inserted, skipped),
+                        String.format("CSV Import Finished!\n- Successfully imported: %d student(s)\n- Skipped / Duplicates: %d", inserted, skipped),
                         "CSV Import Summary",
                         JOptionPane.INFORMATION_MESSAGE);
 

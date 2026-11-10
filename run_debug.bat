@@ -24,3 +24,4 @@ echo If the application didn't open or closed unexpectedly, see the output above
 echo Diagnostic logs: %%USERPROFILE%%\.college_cert_gen\app_startup.log
 echo.
 pause
+

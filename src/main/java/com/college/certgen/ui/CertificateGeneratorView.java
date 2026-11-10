@@ -62,16 +62,16 @@ public class CertificateGeneratorView extends JPanel {
         JPanel actionsBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         actionsBox.setOpaque(false);
 
-        JButton btnBatch = UIUtils.createSecondaryButton("⚡ Batch by Class");
+        JButton btnBatch = UIUtils.createSecondaryButton("Batch by Class");
         btnBatch.addActionListener(e -> showBatchGenerationDialog());
 
-        JButton btnIssue = UIUtils.createPrimaryButton("💾 Save & Issue");
+        JButton btnIssue = UIUtils.createPrimaryButton("Save & Issue");
         btnIssue.addActionListener(e -> saveAndIssueCertificate());
 
-        JButton btnExportPdf = UIUtils.createSecondaryButton("📥 Export PDF");
+        JButton btnExportPdf = UIUtils.createSecondaryButton("Export PDF");
         btnExportPdf.addActionListener(e -> exportPdf());
 
-        JButton btnExportPng = UIUtils.createSecondaryButton("🖼 Export PNG");
+        JButton btnExportPng = UIUtils.createSecondaryButton("Export PNG");
         btnExportPng.addActionListener(e -> exportPng());
 
         actionsBox.add(btnBatch);
@@ -440,7 +440,7 @@ public class CertificateGeneratorView extends JPanel {
     }
 
     private void showBatchGenerationDialog() {
-        JDialog dlg = new JDialog(mainFrame, "⚡ Bulk Batch Certificate Generation", true);
+        JDialog dlg = new JDialog(mainFrame, "Bulk Batch Certificate Generation", true);
         dlg.setSize(520, 420);
         dlg.setLocationRelativeTo(mainFrame);
         dlg.setLayout(new BorderLayout(15, 15));
@@ -494,7 +494,7 @@ public class CertificateGeneratorView extends JPanel {
         JButton btnCancel = UIUtils.createSecondaryButton("Cancel");
         btnCancel.addActionListener(e -> dlg.dispose());
 
-        JButton btnStart = UIUtils.createPrimaryButton("🚀 Start Bulk Generation");
+        JButton btnStart = UIUtils.createPrimaryButton("Start Bulk Generation");
         btnStart.addActionListener(e -> {
             SchoolClass selectedClass = (SchoolClass) comboClass.getSelectedItem();
             if (selectedClass == null) {
@@ -559,7 +559,7 @@ public class CertificateGeneratorView extends JPanel {
 
             int open = JOptionPane.showConfirmDialog(
                     mainFrame,
-                    String.format("Batch Generation Completed!\n✓ Successfully generated & issued: %d / %d certificates\n📂 Saved to: %s\n\nDo you want to open the output folder now?", success, targets.size(), outDir.getAbsolutePath()),
+                    String.format("Batch Generation Completed!\n- Successfully generated & issued: %d / %d certificates\n- Saved to: %s\n\nDo you want to open the output folder now?", success, targets.size(), outDir.getAbsolutePath()),
                     "Batch Complete",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE
