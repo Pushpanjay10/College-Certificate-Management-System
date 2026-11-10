@@ -200,21 +200,36 @@ public class UIUtils {
         if (activeUser != null && activeUser.getCollegeName() != null && !activeUser.getCollegeName().trim().isEmpty()) {
             return activeUser.getCollegeName().trim();
         }
-        return com.college.certgen.database.DatabaseService.getInstance().getSetting("college_name", "NALANDA COLLEGE, BIHARSHARIF");
+        try {
+            if (com.college.certgen.database.DatabaseService.hasInstance()) {
+                return com.college.certgen.database.DatabaseService.getInstance().getSetting("college_name", "NALANDA COLLEGE, BIHARSHARIF");
+            }
+        } catch (Throwable ignored) {}
+        return "NALANDA COLLEGE, BIHARSHARIF";
     }
 
     public static String getActiveUniversityName() {
         if (activeUser != null && activeUser.getUniversityName() != null && !activeUser.getUniversityName().trim().isEmpty()) {
             return activeUser.getUniversityName().trim();
         }
-        return com.college.certgen.database.DatabaseService.getInstance().getSetting("university_name", "PATLIPUTRA UNIVERSITY, PATNA");
+        try {
+            if (com.college.certgen.database.DatabaseService.hasInstance()) {
+                return com.college.certgen.database.DatabaseService.getInstance().getSetting("university_name", "PATLIPUTRA UNIVERSITY, PATNA");
+            }
+        } catch (Throwable ignored) {}
+        return "PATLIPUTRA UNIVERSITY, PATNA";
     }
 
     public static String getActiveCollegeTagline() {
         if (activeUser != null && activeUser.getCollegeTagline() != null && !activeUser.getCollegeTagline().trim().isEmpty()) {
             return activeUser.getCollegeTagline().trim();
         }
-        return com.college.certgen.database.DatabaseService.getInstance().getSetting("college_tagline", "ESTABLISHED 1870 • CONSTITUENT UNIT OF PATLIPUTRA UNIVERSITY");
+        try {
+            if (com.college.certgen.database.DatabaseService.hasInstance()) {
+                return com.college.certgen.database.DatabaseService.getInstance().getSetting("college_tagline", "ESTABLISHED 1870 • CONSTITUENT UNIT OF PATLIPUTRA UNIVERSITY");
+            }
+        } catch (Throwable ignored) {}
+        return "ESTABLISHED 1870 • CONSTITUENT UNIT OF PATLIPUTRA UNIVERSITY";
     }
 
     public static String buildCertificateVerificationData(Certificate cert) {

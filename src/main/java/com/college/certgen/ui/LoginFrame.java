@@ -22,6 +22,7 @@ public class LoginFrame extends JFrame {
     private JLabel lblError;
     private JLabel lblCollegeTag;
     private JButton btnLogin;
+    private boolean isPopulating = false;
 
     public static class AccountItem {
         private final User user;
@@ -115,6 +116,7 @@ public class LoginFrame extends JFrame {
         populateAccounts();
 
         comboAccounts.addActionListener(e -> {
+            if (isPopulating) return; // Ignore programmatic updates
             AccountItem item = (AccountItem) comboAccounts.getSelectedItem();
             if (item != null) {
                 if (item.getUser() == null) {
@@ -253,12 +255,17 @@ public class LoginFrame extends JFrame {
 
     private void populateAccounts() {
         if (comboAccounts == null) return;
-        comboAccounts.removeAllItems();
-        List<User> list = DatabaseService.getInstance().getAllUsers();
-        for (User u : list) {
-            comboAccounts.addItem(new AccountItem(u));
+        isPopulating = true;
+        try {
+            comboAccounts.removeAllItems();
+            List<User> list = DatabaseService.getInstance().getAllUsers();
+            for (User u : list) {
+                comboAccounts.addItem(new AccountItem(u));
+            }
+            comboAccounts.addItem(new AccountItem(null)); // "+ Add / Register New Account"
+        } finally {
+            isPopulating = false;
         }
-        comboAccounts.addItem(new AccountItem(null)); // "+ Add / Register New Account"
     }
 
     private void performLogin() {

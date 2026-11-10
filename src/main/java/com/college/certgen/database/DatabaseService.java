@@ -16,6 +16,7 @@ public class DatabaseService {
     private Connection activeConnection;
 
     private DatabaseService() {
+        instance = this; // Publish instance immediately so that any initialization or dependent calls receive this instance
         this.currentConfig = new DatabaseConfig();
         initDefaultDatabase();
     }
@@ -25,6 +26,19 @@ public class DatabaseService {
             instance = new DatabaseService();
         }
         return instance;
+    }
+
+    public static synchronized boolean hasInstance() {
+        return instance != null;
+    }
+
+    public String getEffectiveCollegeName() {
+        if (com.college.certgen.ui.UIUtils.getActiveUser() != null &&
+            com.college.certgen.ui.UIUtils.getActiveUser().getCollegeName() != null &&
+            !com.college.certgen.ui.UIUtils.getActiveUser().getCollegeName().trim().isEmpty()) {
+            return com.college.certgen.ui.UIUtils.getActiveUser().getCollegeName().trim();
+        }
+        return getSetting("college_name", "NALANDA COLLEGE, BIHARSHARIF");
     }
 
     public DatabaseConfig getCurrentConfig() {
@@ -565,7 +579,7 @@ public class DatabaseService {
 
     // Department operations
     public List<Department> getAllDepartments() {
-        return getDepartmentsByCollege(com.college.certgen.ui.UIUtils.getActiveCollegeName());
+        return getDepartmentsByCollege(getEffectiveCollegeName());
     }
 
     public List<Department> getDepartmentsByCollege(String collegeName) {
@@ -597,7 +611,7 @@ public class DatabaseService {
     }
 
     public boolean insertDepartment(Department dept) {
-        String col = com.college.certgen.ui.UIUtils.getActiveCollegeName();
+        String col = getEffectiveCollegeName();
         String code = dept.getCode() != null ? dept.getCode().toUpperCase().trim() : "";
         String checkSql = "SELECT id FROM departments WHERE code = ? AND college_name = ? COLLATE NOCASE";
         try (PreparedStatement check = getConnection().prepareStatement(checkSql)) {
@@ -730,7 +744,7 @@ public class DatabaseService {
 
     // Class operations
     public List<SchoolClass> getAllClasses() {
-        return getClassesByCollege(com.college.certgen.ui.UIUtils.getActiveCollegeName());
+        return getClassesByCollege(getEffectiveCollegeName());
     }
 
     public List<SchoolClass> getClassesByCollege(String collegeName) {
@@ -763,7 +777,7 @@ public class DatabaseService {
     }
 
     public boolean insertClass(SchoolClass cls) {
-        String col = com.college.certgen.ui.UIUtils.getActiveCollegeName();
+        String col = getEffectiveCollegeName();
         String code = cls.getClassCode() != null ? cls.getClassCode().toUpperCase().trim() : "";
         String checkSql = "SELECT id FROM classes WHERE class_code = ? AND college_name = ? COLLATE NOCASE";
         try (PreparedStatement check = getConnection().prepareStatement(checkSql)) {
@@ -821,7 +835,7 @@ public class DatabaseService {
 
     // Student operations
     public List<Student> getAllStudents() {
-        return getStudentsByCollege(com.college.certgen.ui.UIUtils.getActiveCollegeName());
+        return getStudentsByCollege(getEffectiveCollegeName());
     }
 
     public List<Student> getStudentsByCollege(String collegeName) {
@@ -862,7 +876,7 @@ public class DatabaseService {
     public boolean insertStudent(Student st) {
         String col = (st.getCollegeName() != null && !st.getCollegeName().trim().isEmpty())
                 ? st.getCollegeName().trim()
-                : com.college.certgen.ui.UIUtils.getActiveCollegeName();
+                : getEffectiveCollegeName();
         String roll = st.getRollNo() != null ? st.getRollNo().replace("'", "").trim() : "";
         String reg = st.getRegNo() != null ? st.getRegNo().replace("'", "").trim() : "";
         String name = st.getName() != null ? st.getName().replace("'", "").trim() : "";
@@ -938,7 +952,7 @@ public class DatabaseService {
 
     // Certificate operations
     public List<Certificate> getAllCertificates() {
-        return getCertificatesByCollege(com.college.certgen.ui.UIUtils.getActiveCollegeName());
+        return getCertificatesByCollege(getEffectiveCollegeName());
     }
 
     public List<Certificate> getCertificatesByCollege(String collegeName) {
@@ -1023,7 +1037,7 @@ public class DatabaseService {
 
     // Dashboard metrics
     public int getCount(String tableName) {
-        String college = com.college.certgen.ui.UIUtils.getActiveCollegeName();
+        String college = getEffectiveCollegeName();
         boolean isNalanda = isNalandaCollege(college);
         if ("students".equalsIgnoreCase(tableName) || "certificates".equalsIgnoreCase(tableName)
                 || "classes".equalsIgnoreCase(tableName) || "departments".equalsIgnoreCase(tableName)) {
